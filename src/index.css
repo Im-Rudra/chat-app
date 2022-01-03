@@ -7,6 +7,8 @@
 :root {
   --bg-light: #303841;
   --bg-dark: #262e35;
+  --font-light: #e1e9f1;
+  --message-me-bg: #7269ef;
 }
 
 body {
@@ -14,4 +16,5 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--font-light);
 }
