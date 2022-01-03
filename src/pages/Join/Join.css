@@ -1,0 +1,23 @@
+.join-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-light);
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  background-color: var(--bg-dark);
+  box-shadow: 0 1px 9px rgba(38, 46, 53, 0.733);
+}
+
+.google-logo {
+  width: 80%;
+}

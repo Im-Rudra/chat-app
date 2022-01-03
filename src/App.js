@@ -1,10 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Join from './pages/Join/Join';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <h1>i am bitue</h1>
+      <Router>
+        <Routes>
+          <Route path="/join" element={<Join />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
