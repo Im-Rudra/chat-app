@@ -1,8 +1,26 @@
 import React from 'react';
 import './Chat.css';
 import UserAvater from '../../static/img/user-avater.png';
+import { io } from 'socket.io-client';
+import { useEffect, useState } from 'react';
+
+const ENDPOINT = 'http://localhost:5000/';
+let socket;
 
 const Chat = () => {
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    socket = io.connect(ENDPOINT);
+    socket.on('message', (data) => {
+      console.log(data);
+    });
+  }, []);
+
+  const submitMessage = () => {
+    socket.emit('message', { message });
+    // console.log('message', message);
+  };
+
   return (
     <div className="chat-container">
       <div className="people-wrapper">
@@ -59,8 +77,9 @@ const Chat = () => {
             type="text"
             placeholder="Search for people"
             name="message-text"
+            onChange={(e) => setMessage(e.target.value)}
           />
-          <button className="message-btn">
+          <button className="message-btn" onClick={submitMessage}>
             <i className="fas fa-paper-plane"></i>
           </button>
         </div>
