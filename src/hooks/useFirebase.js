@@ -10,27 +10,43 @@ import { useEffect, useState } from 'react';
 
 const useFirebase = () => {
   // states
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [dbUser, setDbUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // firebase parameters
   firebaseInit();
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
+
+  // fetch requests
+  const upgetUser = (data) => {
+    const { displayName, email, photoURL } = data;
+    const userDoc = { name: displayName, email, photoURL };
+    const url = 'http://localhost:5000/upgetUser';
+    fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userDoc)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.email) setDbUser(data);
+      });
+  };
 
   // sign in func here
   const signInWithGoogle = () => {
     setLoading(true);
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const user = result.user;
+      .then(({ user }) => {
         setUser(user);
-        console.log(user);
         setError('');
+        console.log(user);
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
+      .catch((err) => {
+        setError(err.message);
       })
       .finally(() => setLoading(false));
   };
@@ -40,11 +56,11 @@ const useFirebase = () => {
     setLoading(true);
     signOut(auth)
       .then(() => {
-        setUser({});
+        setUser(null);
         setError('');
       })
-      .catch((error) => {
-        setError(error.message);
+      .catch((err) => {
+        setError(err.message);
       })
       .finally(() => setLoading(false));
   };
@@ -52,14 +68,16 @@ const useFirebase = () => {
   // onAuth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user?.email) {
         setUser(user);
+        if (!dbUser?.email || dbUser?.email !== user?.email) upgetUser(user);
       } else {
-        setUser({});
+        setUser(null);
       }
       setLoading(false);
     });
     return () => unSubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

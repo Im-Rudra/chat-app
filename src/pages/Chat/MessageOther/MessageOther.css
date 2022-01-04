@@ -1,0 +1,15 @@
+.message-other {
+  margin-left: auto;
+  padding: 10px;
+  display: inline-block;
+  min-width: 200px;
+  max-width: 500px;
+  background: rgb(82, 82, 82);
+  border-radius: 10px 10px 0 10px;
+}
+
+.message-other > .message-time {
+  text-align: right;
+  font-size: 12px;
+  color: #c9c9c9;
+}

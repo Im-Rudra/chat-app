@@ -3,6 +3,8 @@ import './Chat.css';
 import UserAvater from '../../static/img/user-avater.png';
 import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
+import MessageMe from './MessageMe/MessageMe';
+import MessageOther from './MessageOther/MessageOther';
 
 const ENDPOINT = 'http://localhost:5000/';
 let socket;
@@ -53,22 +55,8 @@ const Chat = () => {
         </div>
         <div className="messages-container">
           <div className="messages-secondary-container">
-            <div className="message-container">
-              <div className="message-me">
-                <div className="message-text">Hi! How are you?</div>
-                <div className="message-time">
-                  <i className="far fa-clock"></i>10:20 PM
-                </div>
-              </div>
-            </div>
-            <div className="message-container">
-              <div className="message-other">
-                <div className="message-text">Hi! How are you?</div>
-                <div className="message-time">
-                  <i className="far fa-clock"></i>10:20 PM
-                </div>
-              </div>
-            </div>
+            <MessageMe />
+            <MessageOther />
           </div>
         </div>
         <div className="chat-box-container">
