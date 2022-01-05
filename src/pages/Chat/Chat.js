@@ -8,6 +8,8 @@ import MessageOther from './MessageOther/MessageOther';
 import SearchResult from '../../components/SearchResult/SearchResult';
 import SearchUsers from '../../components/SearchUsers/SearchUsers';
 import useFirebase from '../../hooks/useFirebase';
+import { useDispatch } from 'react-redux';
+import { messageReceiveFrontend } from '../../redux/slices/chatSlice';
 
 const ENDPOINT = 'http://localhost:5000/';
 let socket;
@@ -15,10 +17,13 @@ let socket;
 const Chat = () => {
   const { user } = useFirebase();
   const [message, setMessage] = useState('');
+  //redux state 
+  const dispatch = useDispatch()
   useEffect(() => {
     socket = io.connect(ENDPOINT);
     socket.on('message', (data) => {
       console.log(data);
+      dispatch(messageReceiveFrontend(data))
     });
   }, []);
 
