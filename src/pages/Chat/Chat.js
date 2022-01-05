@@ -11,7 +11,7 @@ import useFirebase from '../../hooks/useFirebase';
 import { textShorter } from '../../libs/helperFuncs';
 import ActiveUser from '../../components/ActiveUser/ActiveUser';
 
-const ENDPOINT = 'http://localhost:5000/';
+const ENDPOINT = 'https://im-rudra-chat.herokuapp.com/';
 let socket;
 
 const Chat = () => {
@@ -33,6 +33,7 @@ const Chat = () => {
     socket.emit('join', userDoc);
     socket.on('message', (data) => setMessages((prev) => [...prev, data]));
     socket.on('join', (data) => {
+      console.log(data);
       setActiveUsers(data);
     });
   }, [user]);

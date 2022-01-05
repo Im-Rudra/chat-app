@@ -9,7 +9,7 @@ const SearchUsers = () => {
   const searchHandler = (e) => {
     e.preventDefault();
     if (!searchText.trim()) return;
-    const url = 'http://localhost:5000/searchUsers';
+    const url = 'https://im-rudra-chat.herokuapp.com/searchUsers';
     fetch(url, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },

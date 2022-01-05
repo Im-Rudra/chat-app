@@ -26,7 +26,7 @@ const useFirebase = () => {
   // const upgetUser = (data) => {
   //   const { displayName, email, photoURL } = data;
   //   const userDoc = { name: displayName, email, photoURL };
-  //   const url = 'http://localhost:5000/upgetUser';
+  //   const url = 'https://im-rudra-chat.herokuapp.com/upgetUser';
   //   fetch(url, {
   //     method: 'POST',
   //     headers: { 'content-type': 'application/json' },
@@ -75,7 +75,7 @@ const useFirebase = () => {
         navigate('/chat');
       } else {
         setUser(null);
-        navigate('/signup');
+        navigate('/join');
       }
       setLoading(false);
     });
