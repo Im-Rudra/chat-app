@@ -15,37 +15,6 @@
   margin-bottom: 10px;
 }
 
-.search-form {
-  width: 100%;
-  display: flex;
-  margin-bottom: 1.5em;
-}
-
-.search-field {
-  font-size: 1em;
-  color: var(--font-light);
-  padding: 13px;
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: rgb(54, 64, 74);
-  border-radius: 7px 0 0 7px;
-}
-
-.search-field::placeholder {
-  color: rgb(184, 184, 184);
-}
-
-.search-btn {
-  font-size: 1em;
-  color: var(--font-light);
-  border: none;
-  outline: none;
-  background-color: rgb(54, 64, 74);
-  padding: 13px;
-  border-radius: 0 7px 7px 0;
-}
-
 .recent-header h2 {
   font-size: 1.5em;
   font-weight: 500;
@@ -147,4 +116,10 @@
 
 .message-time > i {
   margin-right: 5px;
+}
+
+.single-active-user {
+  width: 100%;
+  height: 60px;
+  background-color: red;
 }

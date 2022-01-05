@@ -5,11 +5,15 @@ import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import MessageMe from './MessageMe/MessageMe';
 import MessageOther from './MessageOther/MessageOther';
+import SearchResult from '../../components/SearchResult/SearchResult';
+import SearchUsers from '../../components/SearchUsers/SearchUsers';
+import useFirebase from '../../hooks/useFirebase';
 
 const ENDPOINT = 'http://localhost:5000/';
 let socket;
 
 const Chat = () => {
+  const { user } = useFirebase();
   const [message, setMessage] = useState('');
   useEffect(() => {
     socket = io.connect(ENDPOINT);
@@ -29,28 +33,30 @@ const Chat = () => {
         <div className="people-header">
           <h2>People</h2>
         </div>
-        <div className="search-form">
-          <input
-            className="search-field"
-            type="text"
-            placeholder="Search for people"
-            name="search-text"
-          />
-          <button className="search-btn">
-            <i className="fas fa-search"></i>
-          </button>
-        </div>
+        {/* <SearchUsers />
         <div className="recent-header">
           <h2>Recent</h2>
+        </div> */}
+        <div className="active-people">
+          <div className="single-active-user">
+            <div className="user-avater"></div>
+          </div>
         </div>
       </div>
       <div className="chat-wrapper">
         <div className="chat-header-wrapper">
           <div className="chat-header-info">
             <div className="user-avater">
-              <img className="user-img" src={UserAvater} alt="user avater" />
+              <img
+                className="user-img"
+                src={user?.email ? user.photoURL : UserAvater}
+                alt="user avater"
+                style={{ borderRadius: '50%' }}
+              />
             </div>
-            <div className="user-name">Ashikul Islam</div>
+            <div className="user-name">
+              {user?.email ? user.displayName : 'User Name'}
+            </div>
           </div>
         </div>
         <div className="messages-container">

@@ -1,0 +1,27 @@
+.search-person {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(121, 121, 121);
+  cursor: pointer;
+}
+
+.search-person:hover {
+  background-color: rebeccapurple;
+}
+
+.search-person > .person-avater {
+  width: 35px;
+  height: 35px;
+  border: 2px solid #c9c9c9;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.person-info > .person-name {
+  font-size: 13px;
+}
+.person-info > .person-email {
+  font-size: 11px;
+}
