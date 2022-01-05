@@ -1,10 +1,20 @@
 .message-me {
+  position: relative;
   background: var(--message-me-bg);
   padding: 10px;
   display: inline-block;
   min-width: 200px;
   max-width: 500px;
   border-radius: 10px 10px 10px 0;
+  margin: 19px 0;
+}
+
+.message-me > p {
+  position: absolute;
+  display: block;
+  top: -18px;
+  right: 5px;
+  font-size: 14px;
 }
 
 .message-me > .message-text {

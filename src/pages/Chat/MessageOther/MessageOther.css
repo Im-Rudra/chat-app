@@ -1,4 +1,10 @@
+.message-other-container {
+  justify-content: flex-end;
+  /* position: relative; */
+}
+
 .message-other {
+  position: relative;
   margin-left: auto;
   padding: 10px;
   display: inline-block;
@@ -6,6 +12,15 @@
   max-width: 500px;
   background: rgb(82, 82, 82);
   border-radius: 10px 10px 0 10px;
+  margin: 19px 0;
+}
+
+.message-other > p {
+  position: absolute;
+  /* display: block; */
+  top: -18px;
+  left: 5px;
+  font-size: 14px;
 }
 
 .message-other > .message-time {

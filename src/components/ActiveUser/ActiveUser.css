@@ -1,0 +1,43 @@
+.single-active-user {
+  width: 100%;
+  height: 60px;
+  background-color: var(--bg-dark);
+}
+
+.single-active-user {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.single-active-user .user-avater {
+  padding: 7px;
+  position: relative;
+  margin: 0 7px 0 0;
+}
+
+.single-active-user .user-avater > img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.single-active-user .user-avater::after {
+  position: absolute;
+  content: '';
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--bg-dark);
+  background-color: turquoise;
+  border-radius: 50%;
+  bottom: 8px;
+  right: 7px;
+}
+
+.active-user-name {
+  font-size: 14px;
+}
+.active-user-email {
+  font-size: 11px;
+  color: #8d8d8d;
+}

@@ -8,6 +8,8 @@ import MessageOther from './MessageOther/MessageOther';
 import SearchResult from '../../components/SearchResult/SearchResult';
 import SearchUsers from '../../components/SearchUsers/SearchUsers';
 import useFirebase from '../../hooks/useFirebase';
+import { textShorter } from '../../libs/helperFuncs';
+import ActiveUser from '../../components/ActiveUser/ActiveUser';
 
 const ENDPOINT = 'http://localhost:5000/';
 let socket;
@@ -15,16 +17,53 @@ let socket;
 const Chat = () => {
   const { user } = useFirebase();
   const [message, setMessage] = useState('');
-  useEffect(() => {
-    socket = io.connect(ENDPOINT);
-    socket.on('message', (data) => {
-      console.log(data);
-    });
-  }, []);
+  const [messages, setMessages] = useState([]);
+  const [scrollHeight, setScrollHeight] = useState(44);
+  const [activeUsers, setActiveUsers] = useState([]);
 
+  useEffect(() => {
+    if (!user?.email) return;
+    const userDoc = {
+      username: user?.displayName,
+      email: user?.email,
+      photoURL: user?.photoURL,
+      timeStamp: Date.now()
+    };
+    socket = io.connect(ENDPOINT);
+    socket.emit('join', userDoc);
+    socket.on('message', (data) => setMessages((prev) => [...prev, data]));
+    socket.on('join', (data) => {
+      setActiveUsers(data);
+    });
+  }, [user]);
   const submitMessage = () => {
-    socket.emit('message', { message });
-    // console.log('message', message);
+    if (!message.trim()) return;
+    const messageDoc = {
+      username: user.displayName,
+      email: user.email,
+      message,
+      timeStamp: Date.now()
+    };
+    socket.emit('message', messageDoc);
+    setMessage('');
+    setScrollHeight(44);
+  };
+
+  const textAreaChangeHandler = (e) => {
+    setMessage(e.target.value);
+    setTimeout(() => {
+      setScrollHeight(44);
+      setScrollHeight(e.target.scrollHeight);
+    }, 0);
+  };
+
+  const textAreaKeyPress = (e) => {
+    if (e.code === 'Enter' && e.shiftKey) return;
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      submitMessage();
+      setScrollHeight(44);
+    }
   };
 
   return (
@@ -38,9 +77,9 @@ const Chat = () => {
           <h2>Recent</h2>
         </div> */}
         <div className="active-people">
-          <div className="single-active-user">
-            <div className="user-avater"></div>
-          </div>
+          {activeUsers?.map((user) => (
+            <ActiveUser key={user.id} user={user} />
+          ))}
         </div>
       </div>
       <div className="chat-wrapper">
@@ -61,17 +100,29 @@ const Chat = () => {
         </div>
         <div className="messages-container">
           <div className="messages-secondary-container">
-            <MessageMe />
-            <MessageOther />
+            {messages.map((msg) =>
+              msg.email === user.email ? (
+                <MessageMe message={msg} key={msg.timeStamp} />
+              ) : (
+                <MessageOther message={msg} key={msg.timeStamp} />
+              )
+            )}
           </div>
         </div>
         <div className="chat-box-container">
-          <input
+          <textarea
             className="message-field"
             type="text"
             placeholder="Search for people"
             name="message-text"
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={textAreaChangeHandler}
+            onKeyPress={textAreaKeyPress}
+            value={message}
+            style={{
+              maxHeight: '90px',
+              height: `${scrollHeight}px`,
+              overflowY: scrollHeight > 91 ? 'auto' : 'hidden'
+            }}
           />
           <button className="message-btn" onClick={submitMessage}>
             <i className="fas fa-paper-plane"></i>
